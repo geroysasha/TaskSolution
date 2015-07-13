@@ -1,0 +1,7 @@
+6	Romanenko	100.000000	Hourly
+4	Dudarenko	9000.000000	Fixed
+0	Karpenko	50.000000	Hourly
+1	Kozlov	34.600000	Hourly
+5	Ivanov	5000.000000	Fixed
+2	Petrov	5000.000000	Fixed
+3	Alekseenko	3.420000	Hourly
