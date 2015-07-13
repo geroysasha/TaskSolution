@@ -107,7 +107,6 @@ void addEmployee(shared_ptr<vector<shared_ptr<Employee>>> empl, shared_ptr<vecto
 
 	if (vec == NULL)
 	{
-		auto buff = to_string(0);
 
 		emplFields.empl_id = id_Employee(empl);
 
