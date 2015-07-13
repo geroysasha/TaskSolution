@@ -21,6 +21,8 @@ bool check_input_hourly_rate(string &input);
 bool isNumber(string str);
 bool search_id_duplicate(vector<int> &vec_id, int id);
 int id_Employee(shared_ptr<vector<shared_ptr<Employee>>> empl);
+string input_employee_type();
+double input_emploee_salary(string employee_type);
 
 //правило сортровки по имени и среднемесячной заработоной плате
 struct
@@ -113,51 +115,18 @@ void addEmployee(shared_ptr<vector<shared_ptr<Employee>>> empl, shared_ptr<vecto
 
 		console_input(emplFields.name);
 
-		while (true)
+		while (emplFields.wage == -1.0)
 		{
-
-			cout << "Enter Employee type ([h] - hourly, [f] - fixed): ";
-
-			console_input(buff);
-
-			if (buff.find("h") == string::npos && buff.find("f") == string::npos)
+			if (emplFields.empl_type == " ")
 			{
-				cout << "-->ALERT!!! Incorrect Employee type." << endl;
+				emplFields.empl_type = input_employee_type();
 			}
 			else
 			{
-				switch (*buff.c_str())
-				{
-				case 'h':
-					emplFields.empl_type = "Hourly";
-					break;
-				case 'f':
-					emplFields.empl_type = "Fixed";
-					break;
-				default:
-					break;
-				}
-				break;
+				emplFields.wage = input_emploee_salary(emplFields.empl_type);
 			}
 		}
 
-		while (true)
-		{
-
-			cout << ((emplFields.empl_type.find("Hourly") != string::npos) ? "Enter hourly rate: " : "Enter salary: ");
-
-			console_input(buff);
-
-			if (!check_input_hourly_rate(buff))
-			{
-				cout << "-->ALERT!!! Incorrect hourly rate." << endl;
-			}
-			else
-			{
-				emplFields.wage = atof(buff.c_str());
-				break;
-			}
-		}
 	}
 	else
 	{
@@ -181,13 +150,63 @@ void addEmployee(shared_ptr<vector<shared_ptr<Employee>>> empl, shared_ptr<vecto
 }
 
 
+string input_employee_type()
+{
+	auto buff = to_string(0);
+
+	cout << "Enter Employee type ([h] - hourly, [f] - fixed): ";
+
+	console_input(buff);
+
+	if (buff.find("h") == string::npos && buff.find("f") == string::npos)
+	{
+		cout << "-->ALERT!!! Incorrect Employee type." << endl;
+	}
+	else
+	{
+		switch (*buff.c_str())
+		{
+		case 'h':
+			return "Hourly";
+			break;
+		case 'f':
+			return "Fixed";
+			break;
+		default:
+			break;
+		}
+	}
+
+	return " ";
+}
+
+
+double input_emploee_salary(string employee_type)
+{
+	auto buff = to_string(0);
+
+	cout << ((employee_type.find("Hourly") != string::npos) ? "Enter hourly rate: " : "Enter salary: ");
+
+	console_input(buff);
+
+	if (!check_input_hourly_rate(buff))
+	{
+		cout << "-->ALERT!!! Incorrect data." << endl;
+	}
+	else
+	{
+		return atof(buff.c_str());
+	}
+	return -1.0;
+}
+
+
 void show_Employee(shared_ptr<vector<shared_ptr<Employee>>> empl)
 {
 	//сортируем коллекцию
 	sort(empl->begin(), empl->end(), compare_wage_and_name);
 
 	auto i = 0;
-	auto it = empl->begin();
 	auto empl_size = empl->size();
 
 	cout << "======================All emploees======================" << endl;
@@ -199,27 +218,23 @@ void show_Employee(shared_ptr<vector<shared_ptr<Employee>>> empl)
 	cout << "========================================================" << endl;
 	cout << "======================First five names==================" << endl;
 
-	while (i < 5 && empl->size() != 0) 
+	while (i < 5 && i < empl_size)
 	{
-		cout << (*it)->get_name() << endl;
-		*it++;
+		cout << empl->at(i)->get_name() << endl;
 		i++;
 	}
 
 	cout << "========================================================" << endl;
 	cout << "======================Last three id=====================" << endl;
 
-	i = 0;
-	it = empl->begin();
-	while (it < empl->end())
+	i = (empl_size > 3) ? empl_size - 3 : 0;
+
+	while (i < empl_size)
 	{
-		if ((i > empl_size - 4) || (empl_size - 4) < 0)
-		{
-			cout << (*it)->get_id() << endl;
-		}
-		*it++;
+		cout << empl->at(i)->get_id() << endl;
 		i++;
 	}
+	
 	cout << "========================================================" << endl;
 }
 
