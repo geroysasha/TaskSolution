@@ -5,9 +5,11 @@
 class HourlyEmployee : public Employee
 {
 public:
+	HourlyEmployee() :
+		Employee(){}
 
-	HourlyEmployee(EmplFields &&emplFields) :
-		Employee(move(emplFields)){}
+	HourlyEmployee(HourlyEmployee &&obj) :
+		Employee(move(obj)){}
 
 	HourlyEmployee &operator=(EmplFields &&emplFields)
 	{

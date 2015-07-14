@@ -18,16 +18,20 @@ class Employee
 {
 public:
 	
-	Employee(EmplFields &&emplFields)
-	{
-		this->emplFields = move(emplFields);
+	Employee();
+
+	Employee(Employee&& obj) : emplFields(move(obj.emplFields)) 
+	{ 
+		std::cout << "move constructor!\n"; 
 	}
 
 	Employee &operator=(EmplFields &&emplFields)
 	{
+		cout << "USE move assigmant" << endl;
 		this->emplFields = move(emplFields);
 		return *this;
 	}
+
 	virtual ~Employee();
 	virtual double average_monthly_wage() = 0;
 	int get_id();

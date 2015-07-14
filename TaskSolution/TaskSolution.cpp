@@ -138,11 +138,13 @@ void addEmployee(shared_ptr<vector<shared_ptr<Employee>>> empl, shared_ptr<vecto
 	//добывляем сторудника в коллекцию
 	if (emplFields.empl_type.find("Hourly") != string::npos)
 	{
-		empl->push_back(make_shared<HourlyEmployee>(move(emplFields)));
+		empl->push_back(make_shared<HourlyEmployee>(HourlyEmployee()));
+		*empl->at(empl->size() - 1) = move(emplFields);
 	}
 	else
 	{
-		empl->push_back(make_shared<FixedEmployee>(move(emplFields)));
+		empl->push_back(make_shared<FixedEmployee>(FixedEmployee()));
+		*empl->at(empl->size() - 1) = move(emplFields);
 	}		 
 
 

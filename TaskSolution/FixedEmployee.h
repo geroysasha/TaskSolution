@@ -5,11 +5,15 @@
 class FixedEmployee : public Employee
 {
 public:
-	FixedEmployee(EmplFields &&emplFields) :
-		Employee(move(emplFields)){}
+	FixedEmployee() :
+		Employee(){}
+
+	FixedEmployee(FixedEmployee &&obj) :
+		Employee(move(obj)){}
 
 	FixedEmployee &operator=(EmplFields &&emplFields)
 	{
+		cout << "USE move assigmant fixed" << endl;
 		Employee::operator=(move(emplFields));
 		return *this;
 	}
