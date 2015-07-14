@@ -20,14 +20,10 @@ public:
 	
 	Employee();
 
-	Employee(Employee&& obj) : emplFields(move(obj.emplFields)) 
-	{ 
-		std::cout << "move constructor!\n"; 
-	}
+	Employee(Employee&& obj) : emplFields(move(obj.emplFields)) { }
 
 	Employee &operator=(EmplFields &&emplFields)
 	{
-		cout << "USE move assigmant" << endl;
 		this->emplFields = move(emplFields);
 		return *this;
 	}
