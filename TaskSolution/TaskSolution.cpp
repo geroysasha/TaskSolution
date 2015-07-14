@@ -14,7 +14,7 @@
 void addEmployee(shared_ptr<vector<shared_ptr<Employee>>> empl, shared_ptr<vector<string>> vec);
 void show_Employee(shared_ptr<vector<shared_ptr<Employee>>> empl);
 void read_file(shared_ptr<vector<shared_ptr<Employee>>> empl);
-void save_file(shared_ptr<vector<shared_ptr<Employee>>> empl);
+void write_file(shared_ptr<vector<shared_ptr<Employee>>> empl);
 void console_input(string &buff);
 void line_parsing(string line, shared_ptr<vector<string>> data);
 bool check_input_hourly_rate(string &input);
@@ -44,7 +44,7 @@ struct
 	}
 } compare_wage_and_name;
 
-//правило сортировки по возрастанию идентификаторов сотрудников
+//правило сортировки по возрастанию идентификатора сотрудников
 struct
 {
 	inline bool operator()(shared_ptr<Employee> lhs, shared_ptr<Employee> rhs)
@@ -80,7 +80,7 @@ int _tmain(int argc, _TCHAR* argv[])
 			read_file(empl);
 			break;
 		case 'w':
-			save_file(empl);
+			write_file(empl);
 			break;
 		case 'c':
 			system("cls");
@@ -100,7 +100,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	return 0;
 }
 
-
+//добавляет сотрудников в коллекцию
 void addEmployee(shared_ptr<vector<shared_ptr<Employee>>> empl, shared_ptr<vector<string>> vec)
 {
 	EmplFields emplFields;
@@ -150,7 +150,7 @@ void addEmployee(shared_ptr<vector<shared_ptr<Employee>>> empl, shared_ptr<vecto
 
 }
 
-
+//ввод и проверка корректности типа сотрудника
 string input_employee_type()
 {
 	auto buff = to_string(0);
@@ -181,7 +181,7 @@ string input_employee_type()
 	return " ";
 }
 
-
+//ввод заработной платы сотрудника
 double input_emploee_salary(string employee_type)
 {
 	auto buff = to_string(0);
@@ -201,7 +201,7 @@ double input_emploee_salary(string employee_type)
 	return -1.0;
 }
 
-
+//вывод информации из коллекции сотрудников на экран
 void show_Employee(shared_ptr<vector<shared_ptr<Employee>>> empl)
 {
 	//сортируем коллекцию
@@ -239,7 +239,7 @@ void show_Employee(shared_ptr<vector<shared_ptr<Employee>>> empl)
 	cout << "========================================================" << endl;
 }
 
-
+//получение идентификатора сотрудника в коллекции
 int id_Employee(shared_ptr<vector<shared_ptr<Employee>>> empl)
 {
 	auto i = 0;
@@ -256,7 +256,7 @@ int id_Employee(shared_ptr<vector<shared_ptr<Employee>>> empl)
 	return empl->size();
 }
 
-
+//получение введенной строки в консоли
 void console_input(string &buff)
 {
 	cin.clear();
@@ -264,7 +264,7 @@ void console_input(string &buff)
 	getline(cin, buff);
 }
 
-
+//проверяет кооректность ввода заработной платы
 bool check_input_hourly_rate(string &input)
 {
 	auto found = input.find_first_not_of("01234567890.");
@@ -272,7 +272,7 @@ bool check_input_hourly_rate(string &input)
 	return found != string::npos ? false : true;
 }
 
-
+//чтение файла
 void read_file(shared_ptr<vector<shared_ptr<Employee>>> empl)
 {
 	
@@ -313,8 +313,8 @@ void read_file(shared_ptr<vector<shared_ptr<Employee>>> empl)
 	}
 }
 
-
-void save_file(shared_ptr<vector<shared_ptr<Employee>>> empl)
+//запись в файл
+void write_file(shared_ptr<vector<shared_ptr<Employee>>> empl)
 {
 	ofstream file("TaskSolution.txt");
 	if (file.is_open())
@@ -332,7 +332,7 @@ void save_file(shared_ptr<vector<shared_ptr<Employee>>> empl)
 	cout << "-->Saved to file" << endl;
 }
 
-
+//извлекает информацию полученную из файла для размещения в коллеции
 void line_parsing(string line, shared_ptr<vector<string>> data)
 {
 	if (line.find("\t") != string::npos)
@@ -382,13 +382,13 @@ void line_parsing(string line, shared_ptr<vector<string>> data)
 	}
 }
 
-
+//проверяет является ли строка числом
 bool isNumber(string str)
 {
 	return (str[0] >= '0' && str[0] <= '9') ? true : false;
 }
 
-
+//проверяет дублирование идентификатора сотрудников
 bool search_id_duplicate(vector<int> &vec_id, int id)
 {
 	for (auto &i:vec_id)
