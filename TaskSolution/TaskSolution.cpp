@@ -267,7 +267,7 @@ void console_input(string &buff)
 //проверяет кооректность ввода заработной платы
 bool check_input_hourly_rate(string &input)
 {
-	auto found = input.find_first_not_of("01234567890.");
+	auto found = input.find_first_not_of("0123456789.");
 
 	return found != string::npos ? false : true;
 }
